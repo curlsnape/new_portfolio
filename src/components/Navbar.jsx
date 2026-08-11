@@ -25,7 +25,6 @@ const Navbar = () => {
         ease: "power3.out",
       });
 
-
       gsap.from(logoRef.current, {
         x: -20,
         opacity: 0,
@@ -37,6 +36,7 @@ const Navbar = () => {
         y: -15,
         opacity: 0,
         duration: 0.5,
+        scale: 1.3,
         stagger: 0.1,
         delay: 0.3,
         ease: "power3.out",
@@ -54,20 +54,33 @@ const Navbar = () => {
           duration: 0.5,
           delay: 0.5,
           ease: "back.out(1.7)",
-        }
+        },
       );
+
+      const cta = ctaRef.current;
+
+      cta.addEventListener("mouseenter", () => {
+        gsap.to(cta, {
+          scale: 1.1,
+          duration: 0.25,
+          ease: "power2.out",
+        });
+      });
+
+      cta.addEventListener("mouseleave", () => {
+        gsap.to(cta, {
+          scale: 1,
+          duration: 0.25,
+          ease: "power2.out",
+        });
+      });
     },
-    { scope: navRef }
+    { scope: navRef },
   );
 
   return (
-    <nav
-      ref={navRef}
-      className=" w-full z-50 px-6 py-3"
-    >
-      <div className="max-w-6xl mx-auto flex items-center justify-between">
-        
-        {/* Logo */}
+    <nav ref={navRef} className=" w-full z-50 px-6 ">
+      <div className="max-w-6xl mx-auto h-[10vh] flex items-center justify-between">
         <NavLink
           ref={logoRef}
           to="/"
@@ -79,13 +92,12 @@ const Navbar = () => {
           rc.
         </NavLink>
 
-        {/* Navigation */}
         <div className="hidden md:flex items-center gap-6">
           {links.map((link, index) => (
             <NavLink
               key={link.to}
               to={link.to}
-              ref={(el) => (linkRefs.current[index] = el)}
+              ref={(elem) => (linkRefs.current[index] = elem)}
               className={({ isActive }) =>
                 `no-underline ${
                   isActive ? "text-black font-medium" : "text-gray-500"
@@ -97,11 +109,10 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* CTA */}
         <NavLink
           ref={ctaRef}
           to="/contact"
-          className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-lg bg-black text-white no-underline"
+          className="hidden md:flex items-center hover:scale-125 gap-2 px-5 py-2.5 rounded-lg bg-black text-white no-underline"
         >
           Let's talk ↗
         </NavLink>
