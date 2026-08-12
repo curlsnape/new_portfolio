@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
 
 const projects = [
   {
     id: "01",
     title: "Exoape",
     category: "Creative Development",
-    description: "Interactive agency experience inspired by modern web design.",
+    description:
+      "Interactive agency experience inspired by modern creative websites.",
     tech: ["React", "GSAP", "Three.js"],
     image:
       "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1600&auto=format&fit=crop",
-    link: "#",
   },
   {
     id: "02",
@@ -20,7 +21,6 @@ const projects = [
     tech: ["React", "API", "Tailwind"],
     image:
       "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop",
-    link: "#",
   },
   {
     id: "03",
@@ -30,7 +30,6 @@ const projects = [
     tech: ["React", "GSAP", "JavaScript"],
     image:
       "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1600&auto=format&fit=crop",
-    link: "#",
   },
   {
     id: "04",
@@ -40,46 +39,41 @@ const projects = [
     tech: ["React", "Redux", "Tailwind"],
     image:
       "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1600&auto=format&fit=crop",
-    link: "#",
-  },
-  {
-    id: "05",
-    title: "Actify",
-    category: "Client Work",
-    description: "An education platform focused on a clean digital experience.",
-    tech: ["React", "Tailwind", "SEO"],
-    image:
-      "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1600&auto=format&fit=crop",
-    link: "#",
-  },
-  {
-    id: "06",
-    title: "Redux Todo",
-    category: "Application",
-    description: "A task management application built with Redux Toolkit.",
-    tech: ["React", "Redux Toolkit", "Vite"],
-    image:
-      "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=1600&auto=format&fit=crop",
-    link: "#",
   },
 ];
 
 const Projects = () => {
   const [activeProject, setActiveProject] = useState(null);
+  const pageRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".project-header", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+
+      gsap.from(".project-card", {
+        y: 40,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        delay: 0.2,
+        ease: "power3.out",
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <main className="min-h-screen bg-black text-white px-5 py-8 md:px-10 lg:px-14">
-      {/* Header */}
-      <header className="mb-20">
-        <div className="flex items-center justify-between border-b border-white/10 pb-5">
-          <span className="text-xs uppercase tracking-[0.25em] text-white/40">
-            Selected Work
-          </span>
-
-          <span className="text-xs uppercase tracking-[0.25em] text-white/40">
-            06 Projects
-          </span>
-        </div>
+    <main
+      ref={pageRef}
+      className="min-h-screen bg-black px-5 py-8 text-white md:px-10 lg:px-14"
+    >
+      <header className="project-header mb-20">
 
         <div className="mt-16 max-w-5xl">
           <p className="mb-5 text-xs uppercase tracking-[0.3em] text-white/40">
@@ -106,8 +100,7 @@ const Projects = () => {
         </div>
       </header>
 
-      {/* Projects Grid */}
-      <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid grid-cols-1 gap-x-4 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
         {projects.map((project) => {
           const isActive = activeProject === project.id;
           const hasActiveProject = activeProject !== null;
@@ -115,24 +108,19 @@ const Projects = () => {
           return (
             <motion.article
               key={project.id}
-              layout
               onMouseEnter={() => setActiveProject(project.id)}
               onMouseLeave={() => setActiveProject(null)}
               animate={{
-                scale: isActive ? 1.025 : 1,
-                opacity:
-                  hasActiveProject && !isActive
-                    ? 0.45
-                    : 1,
+                scale: isActive ? 1.035 : 1,
+                opacity: hasActiveProject && !isActive ? 0.4 : 1,
               }}
               transition={{
-                duration: 0.45,
+                duration: 0.4,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="group relative cursor-pointer"
+              className="project-card group cursor-pointer"
             >
-              {/* Image */}
-              <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-white/5">
+              <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-white/5">
                 <motion.img
                   src={project.image}
                   alt={project.title}
@@ -140,55 +128,43 @@ const Projects = () => {
                     scale: isActive ? 1.08 : 1,
                   }}
                   transition={{
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
+                    duration: 0.5,
+                    ease: "easeOut",
                   }}
                   className="h-full w-full object-cover"
                 />
 
-                {/* Overlay */}
                 <motion.div
-                  initial={{ opacity: 0 }}
                   animate={{
                     opacity: isActive ? 1 : 0,
                   }}
-                  transition={{ duration: 0.3 }}
-                  className="absolute inset-0 bg-black/40"
+                  transition={{ duration: 0.25 }}
+                  className="absolute inset-0 bg-black/35"
                 />
 
-                {/* View Project */}
-                <motion.div
-                  initial={{
-                    opacity: 0,
-                    y: 15,
-                  }}
-                  animate={{
-                    opacity: isActive ? 1 : 0,
-                    y: isActive ? 0 : 15,
-                  }}
-                  transition={{ duration: 0.35 }}
-                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-black"
-                >
-                  ↗
-                </motion.div>
-
-                {/* Project Number */}
                 <div className="absolute left-4 top-4">
                   <span className="text-xs font-medium tracking-wider text-white/70">
                     {project.id}
                   </span>
                 </div>
 
-                {/* Hover Category */}
                 <motion.div
-                  initial={{
-                    opacity: 0,
-                    y: 10,
+                  animate={{
+                    opacity: isActive ? 1 : 0,
+                    scale: isActive ? 1 : 0.8,
                   }}
+                  transition={{ duration: 0.25 }}
+                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-black"
+                >
+                  ↗
+                </motion.div>
+
+                <motion.div
                   animate={{
                     opacity: isActive ? 1 : 0,
                     y: isActive ? 0 : 10,
                   }}
+                  transition={{ duration: 0.25 }}
                   className="absolute bottom-4 left-4"
                 >
                   <span className="rounded-full border border-white/30 bg-black/30 px-3 py-1.5 text-[10px] uppercase tracking-wider backdrop-blur-md">
@@ -197,7 +173,6 @@ const Projects = () => {
                 </motion.div>
               </div>
 
-              {/* Project Info */}
               <div className="mt-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
@@ -205,26 +180,23 @@ const Projects = () => {
                       {project.title}
                     </h2>
 
-                    <p className="mt-1 text-xs text-white/40">
+                    <p className="mt-1 text-xs leading-relaxed text-white/40">
                       {project.description}
                     </p>
                   </div>
 
-                  <span
-                    className={`
-                      text-lg transition-transform duration-300
-                      ${
-                        isActive
-                          ? "translate-x-0 -translate-y-1"
-                          : "translate-x-0 translate-y-0"
-                      }
-                    `}
+                  <motion.span
+                    animate={{
+                      x: isActive ? 3 : 0,
+                      y: isActive ? -3 : 0,
+                    }}
+                    transition={{ duration: 0.25 }}
+                    className="text-lg"
                   >
                     ↗
-                  </span>
+                  </motion.span>
                 </div>
 
-                {/* Tech Stack */}
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   {project.tech.map((item) => (
                     <span
@@ -241,11 +213,10 @@ const Projects = () => {
         })}
       </section>
 
-      {/* Footer */}
       <footer className="mt-32 border-t border-white/10 py-8">
         <div className="flex flex-col justify-between gap-4 md:flex-row">
           <span className="text-xs uppercase tracking-[0.25em] text-white/30">
-            That's all — for now.
+            Let's build something together
           </span>
 
           <a
@@ -253,6 +224,7 @@ const Projects = () => {
             className="group inline-flex items-center gap-2 text-sm uppercase tracking-wide"
           >
             Start a conversation
+
             <span className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
               ↗
             </span>
