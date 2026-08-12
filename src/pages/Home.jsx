@@ -2,9 +2,8 @@ import React from "react";
 import Hero from "../components/Hero";
 import Marquee from "../components/Marquee";
 import AboutBrief from "../components/AboutMe";
-import ContactCTA from "../components/CTA";
-import ProjectsPreview from "../components/MyProjects";
-import Work from "../components/MyProjects";
+import CTA from "../components/CTA";
+import Projects from "../components/MyProjects";
 
 const Home = () => {
   return (
@@ -12,8 +11,8 @@ const Home = () => {
       <Hero />
       <Marquee />
       <AboutBrief />
-      <Work />
-      <ContactCTA />
+      <Projects />
+      <CTA />
     </div>
   );
 };

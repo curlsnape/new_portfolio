@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-export default function ContactCTA() {
+export default function CTA() {
   const container = useRef(null);
 
   useGSAP(

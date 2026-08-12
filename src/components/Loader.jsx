@@ -7,7 +7,6 @@ gsap.registerPlugin(useGSAP);
 export default function Loader({ onComplete }) {
   const container = useRef(null);
   const countRef = useRef(null);
-  const barRef = useRef(null);
   const [loading, setLoading] = useState(true);
 
   useGSAP(
@@ -16,9 +15,9 @@ export default function Loader({ onComplete }) {
 
       const paint = () => {
         const rounded = Math.round(counter.value);
-        if (countRef.current) countRef.current.textContent = `${rounded}%`;
-        if (barRef.current) {
-          barRef.current.style.transform = `scaleX(${counter.value / 100})`;
+
+        if (countRef.current) {
+          countRef.current.textContent = `${rounded}%`;
         }
       };
 
@@ -29,6 +28,7 @@ export default function Loader({ onComplete }) {
 
       const mm = gsap.matchMedia();
 
+     
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const tl = gsap.timeline({
           defaults: { ease: "power3.out" },
@@ -41,20 +41,30 @@ export default function Loader({ onComplete }) {
           onUpdate: paint,
         }).to(
           container.current,
-          { yPercent: -100, duration: 0.9 },
-          "+=0.2", 
+          {
+            yPercent: -100,
+            duration: 0.9,
+          },
+          "+=0.2"
         );
       });
-      mm.add("(prefers-reduced-motion: reduce)", () => {
-        const tl = gsap.timeline({ onComplete: finish });
 
-        tl.to(counter, { value: 100, duration: 0.3, ease: "none", onUpdate: paint }).set(
-          container.current,
-          { yPercent: -100 },
-        );
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        const tl = gsap.timeline({
+          onComplete: finish,
+        });
+
+        tl.to(counter, {
+          value: 100,
+          duration: 0.3,
+          ease: "none",
+          onUpdate: paint,
+        }).set(container.current, {
+          yPercent: -100,
+        });
       });
     },
-    { scope: container },
+    { scope: container }
   );
 
   if (!loading) return null;
@@ -70,17 +80,10 @@ export default function Loader({ onComplete }) {
 
       <span
         ref={countRef}
-        className="font-display text-7xl md:text-8xl font-black tabular-nums"
+        className="font-display text-7xl font-black tabular-nums md:text-8xl"
       >
         0%
       </span>
-
-      <div className="h-[2px] w-40 md:w-56 overflow-hidden bg-white/15">
-        <div
-          ref={barRef}
-          className="h-full w-full origin-left scale-x-0 bg-white"
-        />
-      </div>
     </div>
   );
 }

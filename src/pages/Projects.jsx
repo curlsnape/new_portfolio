@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
+import { ArrowUpRight } from "lucide-react";
 
 const projects = [
   {
@@ -9,36 +10,36 @@ const projects = [
     category: "Creative Development",
     description:
       "Interactive agency experience inspired by modern creative websites.",
-    tech: ["React", "GSAP", "Three.js"],
-    image:
-      "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1600&auto=format&fit=crop",
+    tech: ["React", "GSAP", "Framer Motion"],
+    image: "/assets/exoape.png",
+    link: "https://exoape-clone-beta.vercel.app/",
   },
   {
     id: "02",
     title: "Movixer",
     category: "Web Application",
     description: "A movie discovery experience powered by external APIs.",
-    tech: ["React", "API", "Tailwind"],
-    image:
-      "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop",
+    tech: ["React", "API", "Redux Toolkit"],
+    image: "/assets/Movixer.png",
+    link: "https://movixer.vercel.app/",
   },
   {
     id: "03",
-    title: "OBYS",
+    title: "Refokus",
     category: "Creative Website",
     description: "A recreation of a modern creative agency website.",
-    tech: ["React", "GSAP", "JavaScript"],
-    image:
-      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1600&auto=format&fit=crop",
+    tech: ["GSAP", "JavaScript"],
+    image: "/assets/refokus.png",
+    link: "https://refokus-clone-nu.vercel.app/",
   },
   {
     id: "04",
-    title: "Shopzo",
-    category: "E-Commerce",
-    description: "A modern shopping experience with state management.",
-    tech: ["React", "Redux", "Tailwind"],
-    image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1600&auto=format&fit=crop",
+    title: "Obys",
+    category: "Creative Development",
+    description: "A recreation of a modern creative agency website.",
+    tech: ["GSAP", "JavaScript"],
+    image: "/assets/obys.png",
+    link: "https://curlsnape.github.io/OBYS-AGENCY/",
   },
 ];
 
@@ -74,13 +75,12 @@ const Projects = () => {
       className="min-h-screen bg-black px-5 py-8 text-white md:px-10 lg:px-14"
     >
       <header className="project-header mb-20">
-
         <div className="mt-16 max-w-5xl">
           <p className="mb-5 text-xs uppercase tracking-[0.3em] text-white/40">
             Projects — 2026
           </p>
 
-          <h1 className="font-display text-[clamp(4rem,11vw,10rem)] font-black uppercase leading-[0.8] tracking-[-0.07em]">
+          <h1 className="font-display text-[clamp(4rem,11vw,10rem)] font-black uppercase leading-[0.8]">
             Selected
             <br />
             Work<span className="text-white/30">.</span>
@@ -89,9 +89,8 @@ const Projects = () => {
 
         <div className="mt-12 flex flex-col justify-between gap-5 border-t border-white/10 pt-5 md:flex-row">
           <p className="max-w-md text-sm leading-relaxed text-white/50">
-            A collection of interfaces, experiments and digital experiences
-            I've built while exploring frontend development and creative web
-            design.
+            A collection of interfaces, experiments and digital experiences I've
+            built while exploring frontend development and creative web design.
           </p>
 
           <span className="text-xs uppercase tracking-[0.2em] text-white/30">
@@ -148,16 +147,15 @@ const Projects = () => {
                   </span>
                 </div>
 
-                <motion.div
-                  animate={{
-                    opacity: isActive ? 1 : 0,
-                    scale: isActive ? 1 : 0.8,
-                  }}
-                  transition={{ duration: 0.25 }}
-                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-black"
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-black transition-transform duration-300 hover:scale-110"
+                  aria-label={`Visit ${project.title} project`}
                 >
-                  ↗
-                </motion.div>
+                  <ArrowUpRight size={16} />
+                </a>
 
                 <motion.div
                   animate={{
@@ -193,7 +191,7 @@ const Projects = () => {
                     transition={{ duration: 0.25 }}
                     className="text-lg"
                   >
-                    ↗
+                    <ArrowUpRight size={16} />
                   </motion.span>
                 </div>
 
@@ -213,7 +211,7 @@ const Projects = () => {
         })}
       </section>
 
-      <footer className="mt-32 border-t border-white/10 py-8">
+      <footer className="mt-20 border-t border-white/10 pt-8">
         <div className="flex flex-col justify-between gap-4 md:flex-row">
           <span className="text-xs uppercase tracking-[0.25em] text-white/30">
             Let's build something together
@@ -224,10 +222,10 @@ const Projects = () => {
             className="group inline-flex items-center gap-2 text-sm uppercase tracking-wide"
           >
             Start a conversation
-
-            <span className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
-              ↗
-            </span>
+            <ArrowUpRight
+              size={16}
+              className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+            />
           </a>
         </div>
       </footer>
