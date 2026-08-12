@@ -18,7 +18,7 @@ const techs = [
   { name: "PHP", icon: Server, color: "#777BB4" },
 ];
 
-export default function TechMarquee() {
+export default function Marquee() {
   const items = [...techs, ...techs];
 
   return (
@@ -53,23 +53,6 @@ export default function TechMarquee() {
           })}
         </div>
       </div>
-
-      <style>{`
-        @keyframes marquee {
-          from {
-            transform: translateX(0);
-          }
-
-          to {
-            transform: translateX(-50%);
-          }
-        }
-
-        .animate-marquee {
-          animation: marquee 20s linear infinite;
-          will-change: transform;
-        }
-      `}</style>
     </section>
   );
 }

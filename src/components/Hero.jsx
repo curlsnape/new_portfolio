@@ -59,10 +59,8 @@ export default function Hero() {
     >
       {/* Heading */}
       <div className="px-6 md:px-10 pt-8">
-        <h1 className="font-display text-[clamp(4rem,9vw,8.5rem)] font-black uppercase leading-[0.78] tracking-[-0.06em]">
-          Frontend
-          <br />
-          Developer
+        <h1 className="font-display text-[clamp(4rem,7vw,8.5rem)] whitespace-nowrap font-black uppercase leading-[0.78] ">
+          Frontend Developer
         </h1>
       </div>
 
@@ -92,7 +90,7 @@ export default function Hero() {
       {/* Visual */}
       <div className="relative flex-1 min-h-0">
         {/* Beige visual card */}
-        <div className="absolute inset-0 rounded-t-[32px] bg-[#eee8df] overflow-hidden">
+        <div className="absolute inset-0 rounded-tl-[140px] rounded-bl-[140px] bg-[#eee8df] overflow-hidden">
           {/* Grid */}
           <div
             className="absolute inset-0 opacity-40 pointer-events-none"

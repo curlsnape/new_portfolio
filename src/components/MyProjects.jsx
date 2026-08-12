@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useScroll } from "framer-motion";
 
 function Work() {
+  const workRef = useRef(null);
+
   const [imgs, setImgs] = useState([
     {
       url: "https://assets-global.website-files.com/6334198f239547d0f9cd84b3/634ef09178195ce0073e38f3_Refokus%20Tools-1.png",
@@ -41,46 +43,50 @@ function Work() {
     },
   ]);
 
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress } = useScroll({
+    target: workRef,
+    offset: ["start start", "end end"],
+  });
 
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (data) => {
-      const percentage = Math.floor(data * 100);
+    const unsubscribe = scrollYProgress.on("change", (progress) => {
+      const percentage = progress * 100;
 
-      const showImages = (activeIndexes) => {
-        setImgs((prev) =>
-          prev.map((item, index) => ({
-            ...item,
-            isActive: activeIndexes.includes(index),
-          })),
-        );
-      };
+      let activeIndexes = [];
 
-      if (percentage < 2) {
-        showImages([]);
-      } else if (percentage < 4) {
-        showImages([0]);
-      } else if (percentage < 6) {
-        showImages([0, 1]);
-      } else if (percentage < 7) {
-        showImages([0, 1, 2]);
-      } else if (percentage < 9) {
-        showImages([0, 1, 2, 3]);
-      } else if (percentage < 11) {
-        showImages([0, 1, 2, 3, 4]);
+      if (percentage < 15) {
+        activeIndexes = [];
+      } else if (percentage < 30) {
+        activeIndexes = [0];
+      } else if (percentage < 45) {
+        activeIndexes = [0, 1];
+      } else if (percentage < 60) {
+        activeIndexes = [0, 1, 2];
+      } else if (percentage < 75) {
+        activeIndexes = [0, 1, 2, 3];
+      } else if (percentage < 90) {
+        activeIndexes = [0, 1, 2, 3, 4];
       } else {
-        showImages([0, 1, 2, 3, 4, 5]);
+        activeIndexes = [0, 1, 2, 3, 4, 5];
       }
+
+      setImgs((prev) =>
+        prev.map((item, index) => ({
+          ...item,
+          isActive: activeIndexes.includes(index),
+        })),
+      );
     });
 
     return () => unsubscribe();
   }, [scrollYProgress]);
 
   return (
-    <section className="w-full bg-black text-white py-24 overflow-hidden">
-      <div className="max-w-screen-xl mx-auto px-6">
-        {/* Section header */}
-        <div className="flex items-center justify-between mb-8">
+    <section ref={workRef} className="relative h-[250vh] bg-black text-white">
+      {/* Sticky Work Content */}
+      <div className="sticky top-0 h-screen overflow-hidden">
+        {/* Section Header */}
+        <div className="flex items-center justify-between px-6 pt-8 md:px-10">
           <span className="text-xs uppercase tracking-[0.25em] text-gray-500">
             Selected Work
           </span>
@@ -94,25 +100,11 @@ function Work() {
         <div className="relative h-[70vh] min-h-[500px]">
           <h1
             className="
-              absolute
-              inset-0
-              flex
-              items-center
-              justify-center
-              font-display
-              text-[clamp(6rem,22vw,20rem)]
-              font-black
-              uppercase
-              tracking-[-0.07em]
-              leading-[0.75]
-              text-white
-              select-none
-            "
+              absolute inset-0 flex items-center justify-center font-display text-[clamp(6rem,22vw,20rem)] font-black uppercase tracking-[-0.07em] leading-[0.75]  text-white select-none"
           >
             Work
           </h1>
 
-          {/* Images */}
           <div className="absolute inset-0 pointer-events-none">
             {imgs.map(
               (item, index) =>
@@ -121,48 +113,26 @@ function Work() {
                     key={index}
                     src={item.url}
                     alt=""
-                    className="
-                      absolute
-                      w-32
-                      md:w-40
-                      lg:w-48
-                      rounded-xl
-                      object-cover
-                      shadow-2xl
-                      -translate-x-1/2
-                      -translate-y-1/2
+                    className=" absolute w-32 md:w-40 lg:w-48 rounded-xl object-cover shadow-2xl -translate-x-1/2 -translate-y-1/2
                     "
                     style={{
                       top: item.top,
                       left: item.left,
+                      transition: "all 0.5s ease-in-out",
                     }}
                   />
                 ),
             )}
           </div>
         </div>
-
-        {/* Bottom link */}
-        <div className="flex justify-end mt-8">
+        <div className="flex justify-end px-6 md:px-10">
           <a
             href="/projects"
-            className="
-              group
-              inline-flex
-              items-center
-              gap-2
-              border-b
-              border-white/30
-              pb-1
-              text-sm
-              uppercase
-              tracking-wide
-              transition-all
-              hover:border-white
-            "
+            className=" group inline-flex items-center gap-2 border-b border-white/30 pb-1 text-sm uppercase tracking-wide transition-all  hover:border-white"
           >
             View all projects
-            <span className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+            <span
+              className=" transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
               ↗
             </span>
           </a>
