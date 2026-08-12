@@ -23,10 +23,8 @@ export default function Marquee() {
 
   return (
     <section className="relative overflow-hidden bg-black py-8">
-      {/* Left fade */}
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-black to-transparent md:w-28" />
 
-      {/* Right fade */}
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-black to-transparent md:w-28" />
 
       <div className="group">
