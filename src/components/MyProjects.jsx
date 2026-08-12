@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { useScroll } from "framer-motion";
 
 function Work() {
@@ -82,10 +83,11 @@ function Work() {
   }, [scrollYProgress]);
 
   return (
-    <section ref={workRef} className="relative h-[250vh] bg-black text-white">
-      {/* Sticky Work Content */}
+    <section
+      ref={workRef}
+      className="relative h-[250vh] bg-black text-white"
+    >
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Section Header */}
         <div className="flex items-center justify-between px-6 pt-8 md:px-10">
           <span className="text-xs uppercase tracking-[0.25em] text-gray-500">
             Selected Work
@@ -96,16 +98,12 @@ function Work() {
           </span>
         </div>
 
-        {/* Work */}
         <div className="relative h-[70vh] min-h-[500px]">
-          <h1
-            className="
-              absolute inset-0 flex items-center justify-center font-display text-[clamp(6rem,22vw,20rem)] font-black uppercase tracking-[-0.07em] leading-[0.75]  text-white select-none"
-          >
+          <h1 className="absolute inset-0 flex select-none items-center justify-center font-display text-[clamp(6rem,22vw,20rem)] font-black uppercase leading-[0.75] tracking-[-0.07em] text-white">
             Work
           </h1>
 
-          <div className="absolute inset-0 pointer-events-none">
+          <div className="pointer-events-none absolute inset-0">
             {imgs.map(
               (item, index) =>
                 item.isActive && (
@@ -113,28 +111,27 @@ function Work() {
                     key={index}
                     src={item.url}
                     alt=""
-                    className=" absolute w-32 md:w-40 lg:w-48 rounded-xl object-cover shadow-2xl -translate-x-1/2 -translate-y-1/2
-                    "
+                    className="absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-xl object-cover shadow-2xl transition-all duration-500 md:w-40 lg:w-48"
                     style={{
                       top: item.top,
                       left: item.left,
-                      transition: "all 0.5s ease-in-out",
                     }}
                   />
                 ),
             )}
           </div>
         </div>
+
         <div className="flex justify-end px-6 md:px-10">
           <a
             href="/projects"
-            className=" group inline-flex items-center gap-2 border-b border-white/30 pb-1 text-sm uppercase tracking-wide transition-all  hover:border-white"
+            className="group inline-flex items-center gap-2 border-b border-white/30 pb-1 text-sm uppercase tracking-wide transition-all hover:border-white"
           >
             View all projects
-            <span
-              className=" transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
-              ↗
-            </span>
+            <ArrowUpRight
+              size={16}
+              className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+            />
           </a>
         </div>
       </div>
